@@ -1,6 +1,26 @@
 USE CarRepair
 GO
 
+DBCC CHECKIDENT ('[Cars]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[Clients]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[Employee]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[Job]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[ProvidedServices]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[Provider]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[Schedule]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[ScheduleOfEmployee]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[ServiceType]', RESEED,1)
+GO
+DBCC CHECKIDENT ('[SpareParts]', RESEED,1)
+
 --INSERT table_name
 --	(,,)
 --VALUES
@@ -88,19 +108,21 @@ VALUES (N'Дверные болты', 16322, 'Kakayatokompaniya', 130, 3)
 
 --Employee
 INSERT Employee(Surname, Name, Patronymic, BirthDate, PassportNumber, INN, SNILS, Telephone)
-VALUES (N'Антонов', N'Виктор', 'Петрович', '16.10.1999', 134597641, 123456, 1349893345, 79626195741)
+--VALUES (N'Антонов', N'Виктор', 'Петрович', '16.10.1999', 134597641, 123456, 1349893345, 79626195741)
+VALUES (N'Антонов', N'Виктор', 'Петрович', CONVERT(datetime, '16.10.1999', 104), 134597641, 123456, 1349893345, 79626195741)
+--CONVERT(varchar | datetime, getdate(), 4)
 
 INSERT Employee(Surname, Name, Patronymic, BirthDate, PassportNumber, INN, SNILS, Telephone)
-VALUES (N'Патронов', N'Антон', 'Хоббитович', '20.12.1989', 134597642, 123456, 1349893345, 79626195744)
+VALUES (N'Патронов', N'Антон', 'Хоббитович', CONVERT(datetime, '20.12.1989', 104), 134597642, 123456, 1349893345, 79626195744)
 
 INSERT Employee(Surname, Name, Patronymic, BirthDate, PassportNumber, INN, SNILS, Telephone)
-VALUES (N'Натужный', N'Ростислав', 'Владимирович', '29.01.1963', 1345976412, 12345633, 134989334556, 79626195743)
+VALUES (N'Натужный', N'Ростислав', 'Владимирович', CONVERT(datetime, '29.01.1963', 104), 1345976412, 12345633, 134989334556, 79626195743)
 
 INSERT Employee(Surname, Name, Patronymic, BirthDate, PassportNumber, INN, SNILS, Telephone)
-VALUES (N'Миронский', N'Сергей', 'Дмитриевич', '13.10.1985', 1345976411, 1234561, 13498933451, 79626195746)
+VALUES (N'Миронский', N'Сергей', 'Дмитриевич', CONVERT(datetime, '13.10.1985', 104), 1345976411, 1234561, 13498933451, 79626195746)
 
 INSERT Employee(Surname, Name, Patronymic, BirthDate, PassportNumber, INN, SNILS, Telephone)
-VALUES (N'Иванов', N'Иван', 'Павлович', '16.08.1987', 1345976413, 1234563, 13498933453, 79626195747)
+VALUES (N'Иванов', N'Иван', 'Павлович', CONVERT(datetime, '16.08.1987', 104), 1345976413, 1234563, 13498933453, 79626195747)
 
 
 --Job
@@ -165,107 +187,107 @@ VALUES (7, '14:45', '19:00')
 --Каждый работает 5 смен в неделю
 --Worker №1
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (1, '13.11.2022', 1)
+VALUES (1, CONVERT(datetime, '13.11.2022', 104), 1)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (3, '13.11.2022', 1)
+VALUES (3, CONVERT(datetime, '13.11.2022', 104), 1)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (5, '13.11.2022', 1)
+VALUES (5, CONVERT(datetime, '13.11.2022', 104), 1)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (7, '13.11.2022', 1)
+VALUES (7, CONVERT(datetime, '13.11.2022', 104), 1)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (9, '13.11.2022', 1)
+VALUES (9, CONVERT(datetime, '13.11.2022', 104), 1)
 
 --Worker №2
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (1, '13.11.2022', 2)
+VALUES (1, CONVERT(datetime, '13.11.2022', 104), 2)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (3, '13.11.2022', 2)
+VALUES (3, CONVERT(datetime, '13.11.2022', 104), 2)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (5, '13.11.2022', 2)
+VALUES (5, CONVERT(datetime, '13.11.2022', 104), 2)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (7, '13.11.2022', 2)
+VALUES (7, CONVERT(datetime, '13.11.2022', 104), 2)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (9, '13.11.2022', 2)
+VALUES (9, CONVERT(datetime, '13.11.2022', 104), 2)
 
 --Worker №3
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (1, '13.11.2022', 3)
+VALUES (1, CONVERT(datetime, '13.11.2022', 104), 3)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (2, '13.11.2022', 3)
+VALUES (2, CONVERT(datetime, '13.11.2022', 104), 3)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (3, '13.11.2022', 3)
+VALUES (3, CONVERT(datetime, '13.11.2022', 104), 3)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (4, '13.11.2022', 3)
+VALUES (4, CONVERT(datetime, '13.11.2022', 104), 3)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (5, '13.11.2022', 3)
+VALUES (5, CONVERT(datetime, '13.11.2022', 104), 3)
 
 --Worker №4
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (2, '13.11.2022', 4)
+VALUES (2, CONVERT(datetime, '13.11.2022', 104), 4)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (4, '13.11.2022', 4)
+VALUES (4, CONVERT(datetime, '13.11.2022', 104), 4)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (6, '13.11.2022', 4)
+VALUES (6, CONVERT(datetime, '13.11.2022', 104), 4)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (8, '13.11.2022', 4)
+VALUES (8, CONVERT(datetime, '13.11.2022', 104), 4)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (9, '13.11.2022', 4)
+VALUES (9, CONVERT(datetime, '13.11.2022', 104), 4)
 
 --Worker №5
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (1, '13.11.2022', 5)
+VALUES (1, CONVERT(datetime, '13.11.2022', 104), 5)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (3, '13.11.2022', 5)
+VALUES (3, CONVERT(datetime, '13.11.2022', 104), 5)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (5, '13.11.2022', 5)
+VALUES (5, CONVERT(datetime, '13.11.2022', 104), 5)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (7, '13.11.2022', 5)
+VALUES (7, CONVERT(datetime, '13.11.2022', 104), 5)
 
 INSERT ScheduleOfEmployee(IDNote, IDShedEmpExpiration, IDEmployee)
-VALUES (9, '13.11.2022', 5)
+VALUES (9, CONVERT(datetime, '13.11.2022', 104), 5)
 
 --Provided Services
-INSERT ProvidedServices(IDJob)
-VALUES (1)
+INSERT ProvidedServices(IDJob, IDContract)
+VALUES (1, 1)
 
-INSERT ProvidedServices(IDJob)
-VALUES (2)
+INSERT ProvidedServices(IDJob, IDContract)
+VALUES (2, 2)
 
-INSERT ProvidedServices(IDJob)
-VALUES (3)
+INSERT ProvidedServices(IDJob, IDContract)
+VALUES (3, 3)
 
-INSERT ProvidedServices(IDJob)
-VALUES (4)
+INSERT ProvidedServices(IDJob, IDContract)
+VALUES (4, 4)
 
 --Contract
 --Data - это дата обращения, startdate - дата начала работ
-INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum, IDProvidedService)
-VALUES (1, '17.08.2013', '1566469879331', '20.08.2013', '20.09.2013', 10000, 1)
+INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum)
+VALUES (1, CONVERT(datetime, '17.08.2013', 104), '1566469879331', CONVERT(datetime, '20.08.2013', 104), CONVERT(datetime, '20.09.2013', 104), 10000)
 
-INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum, IDProvidedService)
-VALUES (2, '12.05.2016', '1566469879331', '13.05.2016', '20.05.2016', 18320, 2)
+INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum)
+VALUES (2, CONVERT(datetime, '12.05.2016', 104), '1566469879331', CONVERT(datetime, '13.05.2016', 104), CONVERT(datetime, '20.05.2016', 104), 18320)
 
-INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum, IDProvidedService)
-VALUES (3, '17.08.2017', '9452170101587', '20.08.2017', '20.09.2017', 1500, 3)
+INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum)
+VALUES (3, CONVERT(datetime, '17.08.2017', 104), '9452170101587', CONVERT(datetime, '20.08.2017', 104), CONVERT(datetime, '20.09.2017', 104), 1500)
 
-INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum, IDProvidedService)
-VALUES (4, '17.08.2017', '84531092131', '20.08.2017', '20.09.2017', 9600, 4)
+INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum)
+VALUES (4, CONVERT(datetime, '17.08.2017', 104), '84531092131', CONVERT(datetime, '20.08.2017', 104), CONVERT(datetime, '20.09.2017', 104), 9600)

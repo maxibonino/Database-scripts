@@ -91,22 +91,24 @@ CREATE TABLE [Job] (
 	IDService int NOT NULL CONSTRAINT FK_Job_ServiceType FOREIGN KEY REFERENCES [ServiceType] (IDServiceType)
 )
 
-GO
-CREATE TABLE [ProvidedServices] (
-	IDProvidedService int NOT NULL IDENTITY(1,1) CONSTRAINT PK_ProvidedServices PRIMARY KEY,
-	IDJob int NOT NULL CONSTRAINT FK_ProvidedServices_Job FOREIGN KEY REFERENCES Job (IDJob)
-)
 
 GO
 CREATE TABLE [Contract] (
-	IDContract bigint NOT NULL IDENTITY(1,1) CONSTRAINT PK_Contract PRIMARY KEY,
+	IDContract int NOT NULL IDENTITY(1,1) CONSTRAINT PK_Contract PRIMARY KEY,
 	IDClient int NOT NULL CONSTRAINT FK_Contract_Clients FOREIGN KEY REFERENCES Clients (IDClient),
 	Data date NOT NULL,
 	TechnicalPassport nvarchar(15) NOT NULL,
 	TotalSum money NOT NULL,
 	StartDateContract date NOT NULL,
 	FinishDateContract date NOT NULL,
-	IDProvidedService int NOT NULL CONSTRAINT FK_Contract_ProvidedServices FOREIGN KEY REFERENCES ProvidedServices (IDProvidedService)
+	--IDProvidedService int NOT NULL CONSTRAINT FK_Contract_ProvidedServices FOREIGN KEY REFERENCES ProvidedServices (IDProvidedService)
+)
+
+GO
+CREATE TABLE [ProvidedServices] (
+	IDProvidedService int NOT NULL IDENTITY(1,1) CONSTRAINT PK_ProvidedServices PRIMARY KEY,
+	IDJob int NOT NULL CONSTRAINT FK_ProvidedServices_Job FOREIGN KEY REFERENCES Job (IDJob),
+	IDContract int NOT NULL CONSTRAINT FK_ProvidedServices_Contract FOREIGN KEY REFERENCES [Contract] (IDContract)
 )
 
 GO
