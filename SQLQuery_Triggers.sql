@@ -1,42 +1,78 @@
 USE CarRepair
 GO
 
---CREATE TRIGGER Insert_ServiceType_CheckPrice
---ON [ServiceType]
---FOR INSERT
---AS
---BEGIN
---	IF @@ROWCOUNT = 1 AND EXISTS(SELECT Price FROM ServiceType WHERE Price <= 0)
---	BEGIN
---		ROLLBACK
---		PRINT(N'Цена услуги должна быть больше нуля!')
---	END
---END
---GO
+CREATE TRIGGER Insert_ServiceType_CheckPrice
+ON [ServiceType]
+FOR INSERT
+AS
+BEGIN
+	IF @@ROWCOUNT = 1 AND EXISTS(SELECT Price FROM ServiceType WHERE Price <= 0)
+	BEGIN
+		ROLLBACK
+		PRINT(N'Цена услуги должна быть больше нуля!')
+	END
+END
+GO
+
+INSERT ServiceType (Title, Price)
+VALUES (N'ЩШФАОЫОА', 13345465)
+
+INSERT ServiceType (Title, Price)
+VALUES (N'ЩШФАОЫОА', -133454654)
+
+
+CREATE TRIGGER SpareParts_INSERT
+ON SpareParts
+FOR INSERT
+AS
+BEGIN
+	IF EXISTS(SELECT Price FROM inserted WHERE Price <= 0)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT N'Неверная цена запчасти!'
+	END
+END
+
+INSERT SpareParts (Title, Articul, Brand, Price, IDProvider)
+VALUES (N'Запчасти на хонду', 8754354, N'Honda Parts c.', 1337.1337, 1)
+
+INSERT SpareParts (Title, Articul, Brand, Price, IDProvider)
+VALUES (N'Honda Civic', 875435243, N'Honda Parts c.', 1337.133723, 1)
+
+INSERT SpareParts (Title, Articul, Brand, Price, IDProvider)
+VALUES (N'Honda Civic', 875435243, N'Honda Parts c.', -1337.133723, 1)
+
 
 DROP TRIGGER Provider_SpareParts_DELETE
 GO
 
-CREATE TRIGGER Provider_SpareParts_DELETE
+
+
+
+
+ALTER TRIGGER Provider_SpareParts_DELETE
 ON Provider
-INSTEAD OF DELETE
+FOR DELETE
 AS
 BEGIN
-	DELETE FROM SpareParts
-	WHERE NOT EXISTS(SELECT * FROM Provider WHERE SpareParts.IDProvider = Provider.IDProvider)
+	DELETE FROM Provider
+	WHERE NOT EXISTS(SELECT Name FROM deleted, SpareParts WHERE SpareParts.IDProvider = deleted.IDProvider AND Provider.IDProvider = deleted.IDProvider)
 END
 GO
 
---INSERT  Provider (Name, Tel)
---VALUES (N'adsadzxca', 7989841560)
+INSERT  Provider (Name, Tel)
+VALUES (N'adsadzxca', 7989841560)
 
 DELETE FROM Provider
 
-DELETE FROM Provider WHERE Provider.IDProvider = 1
+DELETE FROM Provider WHERE Provider.IDProvider = 6
 
 DROP TRIGGER Provider_SpareParts_DELETE2
 GO
 
+
+
+/*
 CREATE TRIGGER Provider_SpareParts_DELETE2
 ON Provider
 FOR DELETE
@@ -57,10 +93,10 @@ print N'Done!'
 	--print N'Done!'
 END
 GO
+*/
 
 
 
-/*
 --Удаление триггера
 DROP TRIGGER ServiceType_INSERT
 
@@ -103,10 +139,10 @@ INSERT INTO ServiceType (Title, Price)
 VALUES (N'Замена тормозных колодок', -18000)
 
 INSERT INTO ServiceType (Title, Price)
-VALUES (N'Замена тормозных колодок', -18000)
-*/
+VALUES (N'Замена тормозных колодок2', -180)
 
-/*
+
+
 DROP TRIGGER Contract_INSERT
 
 CREATE TRIGGER Contract_INSERT
@@ -127,13 +163,16 @@ END
 
 INSERT [Contract](IDClient, Data, TechnicalPassport, StartDateContract, FinishDateContract, TotalSum)
 VALUES (3, CONVERT(datetime, '17.08.2018', 104), '1566469879331', CONVERT(datetime, '20.08.2018', 104), CONVERT(datetime, '20.09.2018', 104), 100)
-*/
 
+
+
+
+/*
 --DETELE TRIGGER
 DROP TRIGGER ProvidedServices_DELETE
 GO
 
-CREATE TRIGGER ProvidedServices_DELETE
+ALTER TRIGGER ProvidedServices_DELETE
 ON [dbo].[ProvidedServices]
 FOR DELETE
 AS
@@ -145,7 +184,7 @@ GO
 
 
 DELETE FROM [dbo].[ProvidedServices]
-WHERE [dbo].[ProvidedServices].IDProvidedService = 25--7
+WHERE [dbo].[ProvidedServices].IDProvidedService = 6--7
 
 DELETE FROM SpareParts WHERE IDPart = 3
 
@@ -153,10 +192,12 @@ INSERT ProvidedServices(IDJob, IDContract)
 VALUES (6, 3)
 
 DELETE FROM SpareParts
-WHERE IDPart = 3
+WHERE IDPart = 3*/
+
+
 
 --DELETE TRIGGER ServiceType_INSTEAD_OF
-/*
+
 CREATE TRIGGER ServiceType_INSTEAD_OF
 ON ServiceType
 INSTEAD OF INSERT
@@ -186,7 +227,7 @@ INSERT ServiceType (Title, Price)
 VALUES (N'Замена ремня ГРМ2', 2000)
 
 INSERT ServiceType (Title, Price)
-VALUES (N'Замена ремня ГРМ2', 2000)*/
+VALUES (N'Замена ремня ГРМ3', 2000)
 
 
 
@@ -196,7 +237,7 @@ GO
 --UPDATE TRIGGER
 --Если обновляем номер пасспорта, то изменение заносим в новую таблицу,
 --т.е. журналируем
-/*
+
 CREATE TRIGGER Employee_UPDATE
 ON Employee
 FOR UPDATE
@@ -227,7 +268,7 @@ UPDATE Employee
 UPDATE Employee
 	SET PassportNumber = 7536163
 	FROM Employee
-	WHERE IDEmployee = 3*/
+	WHERE IDEmployee = 3
 
 
 --DROP TRIGGER ServiceType_INSTEAD_OF_UPDATE
@@ -235,7 +276,7 @@ UPDATE Employee
 
 --INSTEAD OF UPDATE
 --Для старых заказов цена старая, для новых - новая
-/*CREATE TRIGGER ServiceType_INSTEAD_OF_UPDATE
+CREATE TRIGGER ServiceType_INSTEAD_OF_UPDATE
 ON ServiceType
 INSTEAD OF UPDATE
 AS
@@ -248,5 +289,5 @@ BEGIN
 END
 
 UPDATE ServiceType
-SET Price = 2500
-WHERE IDServiceType = 1*/
+SET Price = 9999
+WHERE IDServiceType = 1
