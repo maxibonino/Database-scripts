@@ -1,23 +1,25 @@
 USE CarRepair
 GO
 
---(Non-indexed)
-
 --CLUSTERED
 --Unique
 
-CREATE CLUSTERED INDEX ID_Cars
+CREATE UNIQUE CLUSTERED INDEX ID_Car
 ON Cars (IDCar)
+
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
 
+
 SELECT *
-FROM Clients WHERE IDClient > 100;
+FROM Cars WHERE IDCar > 100;
+
 
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
 
 DROP INDEX ID_Cars ON Cars
+
 
 
 --Composite
@@ -45,10 +47,33 @@ ON Cars (IDCar, IDClient, NCar, Model, [Year], Color)
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
 
+
 SELECT IDCar, IDClient, NCar, Model, [Year], Color
 FROM Cars
-WHERE [Year] > 2003
+WHERE [Year] > 2003 AND LEN(Model) > 4
+
 
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
-DROP INDEX ALL_COLLUMNS_INDEX ON Cars
+
+DROP INDEX ALL_COLLUMNS_INDEX ON Cars;
+
+
+--Composite index again
+--having
+
+CREATE CLUSTERED INDEX IDCar_Model_Color_INDEX
+ON Cars (IDCar, Model, Color)
+
+SET STATISTICS IO ON;
+SET STATISTICS IO ON;
+
+
+USE CarRepair
+GO
+
+SELECT COUNT(Color) AS N'Варианты окраски', Model
+FROM Cars
+GROUP BY Model
+HAVING COUNT(Color) > 5
+ORDER BY COUNT(Color) DESC
