@@ -5,13 +5,13 @@ IF OBJECT_ID ('dbo.ShowClientCars') IS NOT NULL
 	DROP PROC [dbo].[ShowClientCars];
 GO
 
-ALTER PROCEDURE [dbo].[ShowClientCars]
+CREATE PROCEDURE [dbo].[ShowClientCars]
 	@CarsCursor CURSOR VARYING OUTPUT,
 	@IDClient int
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SET @Carscursor = CURSOR
+	SET @CarsCursor = CURSOR
 	FORWARD_ONLY STATIC FOR
 		SELECT Model, NCar, Color
 		FROM Cars
@@ -21,11 +21,14 @@ END
 GO
 
 DECLARE @MyCarsCursor CURSOR;
-EXEC [dbo].[ShowClientCars] @CarsCursor = @MyCarsCursor OUTPUT, @IDClient = 999;
+
+EXEC [dbo].[ShowClientCars] @IDClient = 337, @CarsCursor = @MyCarsCursor OUTPUT;
+FETCH NEXT FROM @MyCarsCursor;
 WHILE (@@FETCH_STATUS = 0)
-BEGIN;
+BEGIN
 	FETCH NEXT FROM @MyCarsCursor;
-END;
+END
+
 CLOSE @MyCarsCursor;
 DEALLOCATE @MyCarsCursor;
 GO

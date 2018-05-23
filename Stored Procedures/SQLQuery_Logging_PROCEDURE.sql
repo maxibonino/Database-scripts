@@ -73,5 +73,5 @@ GO
 
 --Проверка работы процедуры
 EXEC [dbo].[Logging]
-	@Username = N'Neo';
+	@Username = N'jkashlfhsalfkj';
 GO

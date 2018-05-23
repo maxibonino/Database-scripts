@@ -40,10 +40,10 @@ DECLARE @MyCC CURSOR;
 --Проверка работы процедуры
 EXEC [dbo].[GetAllClientContracts]
 	@ContractCursor = @MyCC OUTPUT,
-	@Surname = 'Baumann',
-	@Name = 'Conrad1997',
-	@Patronymic = 'JK1E7UKX';
-
+	@Surname = 'Mcbee',
+	@Name = 'Alphonse2018',
+	@Patronymic = '805UH3A';
+FETCH NEXT FROM @MyCC; --?
 WHILE (@@FETCH_STATUS = 0)
 BEGIN
 	FETCH NEXT FROM @MyCC;

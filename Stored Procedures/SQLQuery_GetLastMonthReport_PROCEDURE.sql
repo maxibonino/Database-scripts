@@ -19,6 +19,11 @@ BEGIN
 END
 GO
 
+--Для того, чтобы вывести результат
+--на экран, помещаем в переменную
+DECLARE @T int;
 
-EXEC [dbo].[GetLastMonthReport];
+EXEC @T = [dbo].[GetLastMonthReport];
+print @T
+
 GO

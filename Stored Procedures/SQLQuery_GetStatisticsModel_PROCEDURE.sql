@@ -30,7 +30,7 @@ GO
 DECLARE @MyCC CURSOR;
 
 EXEC [dbo].[GetStatisticsModel] @ModelCarCursor = @MyCC OUTPUT;
-
+FETCH NEXT FROM @MyCC;
 WHILE (@@FETCH_STATUS = 0)
 BEGIN
 	FETCH NEXT FROM @MyCC;
